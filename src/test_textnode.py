@@ -1,7 +1,7 @@
 import unittest
 
 from textnode import TextNode, TextType
-
+from main import text_node_to_html_node
 
 class TestTextNode(unittest.TestCase):
     def test_eq(self):
@@ -10,27 +10,32 @@ class TestTextNode(unittest.TestCase):
         self.assertEqual(node, node2)
 
     def test_1(self):
-        node = TextNode("This is not a normal text node", TextType.PLAIN)
-        node2 = TextNode("This should not be equal", TextType.PLAIN)
+        node = TextNode("This is not a normal text node", TextType.TEXT)
+        node2 = TextNode("This should not be equal", TextType.TEXT)
         self.assertNotEqual(node, node2)
 
     def test_2(self):
-        node = TextNode("This is not a normal text node", TextType.PLAIN)
-        node2 = TextNode("This should not be equal", TextType.PLAIN)
+        node = TextNode("This is not a normal text node", TextType.TEXT)
+        node2 = TextNode("This should not be equal", TextType.TEXT)
         self.assertNotEqual(node, node2)
     def test_3(self):
-        node = TextNode("This is not a normal text node", TextType.PLAIN)
+        node = TextNode("This is not a normal text node", TextType.TEXT)
         node2 = TextNode("This is not a normal text node", TextType.CODE)
         self.assertNotEqual(node, node2)
     def test_4(self):
-        node = TextNode("This is not a normal text node", TextType.PLAIN,"www.google.com")
-        node2 = TextNode("This is not a normal text node", TextType.PLAIN,"www.google.com")
+        node = TextNode("This is not a normal text node", TextType.TEXT,"www.google.com")
+        node2 = TextNode("This is not a normal text node", TextType.TEXT,"www.google.com")
         self.assertEqual(node, node2)
     def test_5(self):
-        node = TextNode("This is not a normal text node", TextType.PLAIN,"www.google.com")
-        node2 = TextNode("This is not a normal text node", TextType.PLAIN,"www.amazon.com")
+        node = TextNode("This is not a normal text node", TextType.TEXT,"www.google.com")
+        node2 = TextNode("This is not a normal text node", TextType.TEXT,"www.amazon.com")
         self.assertNotEqual(node, node2)
 
+    def test_text(self):
+        node = TextNode("This is a text node", TextType.TEXT)
+        html_node = text_node_to_html_node(node)
+        self.assertEqual(html_node.tag, None)
+        self.assertEqual(html_node.value, "This is a text node")
 
 if __name__ == "__main__":
     unittest.main()
